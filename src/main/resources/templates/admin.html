@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>users</title>
+</head>
+<body>
+<table>
+        <tr>
+            <th>id</th>
+            <th>userName</th>
+            <th>lastName</th>
+            <th>email</th>
+            <th>roles</th>
+        </tr>
+
+        <tr th:each="user : ${users}">
+            <td><a th:href="${user.getId()}">Id</a></td>
+            <td th:text="${user.getUserName()}"></td>
+            <td th:text="${user.getLastName()}"></td>
+            <td th:text="${user.getEmail()}"></td>
+            <td th:text="${user.getRoles()}"></td>
+        </tr>
+    <td>
+        <div th:each="role : ${user.getRoles()}">
+            <span th:text="${role.role}"></span>
+
+            <form th:method="GET" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+                <input type="submit" value="Edit">
+            </form>
+
+        <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+            <input type="submit" value="Delete">
+        </form>
+    </td>
+</table>
+<br>
+<div>
+    <form action="/admin/logout" method="post">
+        <input type="submit" value="Log out"/>
+    </form>
+
+</body>
+</html>
