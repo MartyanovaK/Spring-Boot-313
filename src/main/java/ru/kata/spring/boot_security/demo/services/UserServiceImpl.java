@@ -8,8 +8,8 @@ import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repository.RoleDao;
 import ru.kata.spring.boot_security.demo.repository.UserDao;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
@@ -37,14 +37,17 @@ public class UserServiceImpl implements UserService {
         userDao.add(user);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         userDao.delete(id);
     }
 
+    @Transactional
     @Override
     public void edit(User userUp, Long id) {
         User user = userDao.getById(id);
+        user.setName(userUp.getName());
         user.setUserName(userUp.getUserName());
         user.setLastName(userUp.getLastName());
         user.setEmail(userUp.getEmail());

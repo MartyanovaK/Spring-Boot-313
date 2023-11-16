@@ -1,4 +1,5 @@
 package ru.kata.spring.boot_security.demo.models;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,30 +14,37 @@ public class User implements UserDetails {
 
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "userName")
+    @Column(name = "username")
     private String userName;
 
-    @Column(name = "LastName")
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
 
     public User() {}
 
-    public User(Long id, String userName, String lastName, String email, String password) {
-        this.id = id;
+    public User(String name, String userName, String lastName, String email, String password) {
+        this.name = name;
         this.userName = userName;
         this.lastName = lastName;
         this.email = email;
@@ -49,6 +57,14 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUserName() {
@@ -85,6 +101,10 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public void addRoleToUser(Role role) {
+        this.roles.add(role);
     }
 
     @Override
