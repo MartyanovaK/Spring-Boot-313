@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         return userDao.allUsers();
     }
 
-    @Transactional
+
     @Override
     public void add(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -37,13 +37,13 @@ public class UserServiceImpl implements UserService {
         userDao.add(user);
     }
 
-    @Transactional
+
     @Override
     public void delete(Long id) {
         userDao.delete(id);
     }
 
-    @Transactional
+
     @Override
     public void edit(User userUp, Long id) {
         User user = userDao.getById(id);

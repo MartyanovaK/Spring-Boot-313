@@ -10,4 +10,7 @@ public interface RoleService {
 
     Role findRoleById(Long id);
 
+    void addRoleUser();
+    public void addRoleAdmin();
+
 }

@@ -27,5 +27,11 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.findRoleById(id);
     }
 
+    public void addRoleUser() {
+        roleDao.addRoleUser();
+    }
+    public void addRoleAdmin(){
+        roleDao.addRoleAdmin();
+    }
 
 }
